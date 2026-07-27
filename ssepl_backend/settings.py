@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -107,16 +109,25 @@ WSGI_APPLICATION = 'ssepl_backend.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'ssepl_admin_db'),
-        'USER': os.getenv('DB_USER', 'postgres'),  # Default user
-        'PASSWORD': os.getenv('DB_PASSWORD', 'ssepl_db@dev'),  # Password ko environment variable se fetch karenge
-        'HOST': os.getenv('DB_HOST', 'localhost'),  # Host
-        'PORT': os.getenv('DB_PORT', '5432'),  # Default port
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', 'ssepl_admin_db'),
+            'USER': os.getenv('DB_USER', 'postgres'),  # Default user
+            'PASSWORD': os.getenv('DB_PASSWORD', 'ssepl_db@dev'),  # Password ko environment variable se fetch karenge
+            'HOST': os.getenv('DB_HOST', 'localhost'),  # Host
+            'PORT': os.getenv('DB_PORT', '5432'),  # Default port
+        }
+    }
 
 
 # Password validation
@@ -153,10 +164,11 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = "https://qaapi.fixpay.in/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
