@@ -1,0 +1,10 @@
+
+<form id="airpayForm" action="https://qapgapi.fixpay.in/cgi-bin/sendtoairpay.py" method="post">
+	{% for key, value in payload.items %}
+	  <input type="hidden" name="{{ key }}" value="{{ value }}">
+	{% endfor %}
+	<button type="submit" style="display: none;">Proceed to Payment</button>
+  </form>
+  <script>
+	document.getElementById("airpayForm").submit();
+  </script>

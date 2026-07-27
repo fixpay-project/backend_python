@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Transactions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>POS Transactions</h1>
+    <form id="transactionForm">
+        <label for="mid">MID</label>
+        <input type="text" id="mid" name="mid" required>
+
+        <label for="tid">TID</label>
+        <input type="text" id="tid" name="tid" required>
+
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <label for="card">Card</label>
+        <input type="text" id="card" name="card" required>
+
+        <label for="formattedPan">Formatted PAN</label>
+        <input type="text" id="formattedPan" name="formattedPan" required>
+
+        <label for="payerName">Payer Name</label>
+        <input type="text" id="payerName" name="payerName" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('transactionForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Generate dynamic values
+            const rrNumber = 'RR' + Math.random().toString(36).substr(2, 10).toUpperCase();
+            const txnId = Date.now().toString() + Math.random().toString(36).substr(2, 5).toUpperCase();
+            const authCode = Math.random().toString(36).substr(2, 6).toUpperCase(); // 6-char alphanumeric authCode
+
+            // Get form data
+            const formData = new FormData(event.target);
+            const mid = formData.get('mid');
+            const tid = formData.get('tid');
+            const amount = parseFloat(formData.get('amount'));
+            const card = formData.get('card');
+            const formattedPan = formData.get('formattedPan');
+            const payerName = formData.get('payerName');
+
+            // Prepare the JSON payload
+            const payload = {
+                mid,
+                tid,
+                stan: "40",
+                txnId,
+                amount,
+                status: "AUTHORIZED",
+                txnType: "CHARGE",
+                authCode,
+                rrNumber,
+                username: "1212140010",
+                payerName,
+                batchNumber: "10",
+                paymentMode: "CARD",
+                postingDate: new Date().toISOString(),
+                currencyCode: "INR",
+                customerName: payerName,
+                deviceSerial: "1495346663",
+                formattedPan,
+                invoiceNumber: "",
+                userAgreement: "I agree to pay as per the card issuer agreement and receive chargeslip by electronic means.",
+                amountCashBack: 0,
+                amountOriginal: amount,
+                paymentCardType: "UNKNOWN",
+                pgInvoiceNumber: "31",
+                amountAdditional: 0,
+                paymentCardBrand: "VISA",
+                settlementStatus: "PENDING",
+                externalRefNumber: "EZ202501281738331620",
+                customerReceiptUrl: "http://d.eze.cc/r/o/lpH5SkUn/"
+            };
+
+            try {
+                // Make API call
+                const response = await fetch('https://qaapi.fixpay.in/admin_hub/pos-transactions/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer D81BiVu9uXmQx6H2WYfN2kkKZESHrZpiHYSp0bw6aWf39kHtWU'
+                        //D81BiVu9uXmQx6H2WYfN2kkKZESHrZpiHYSp0bw6aWf39kHtWU
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Transaction submitted successfully!\n' + JSON.stringify(result));
+                } else {
+                    const error = await response.json();
+                    alert('Error submitting transaction:\n' + JSON.stringify(error));
+                }
+            } catch (error) {
+                alert('An error occurred:\n' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

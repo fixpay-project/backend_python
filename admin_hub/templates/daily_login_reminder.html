@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Login Reminder</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <table width="700" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                🔔 Daily Login Reminder
+                            </h1>
+                            <p style="margin: 10px 0 0 0; color: #e0e7ff; font-size: 16px;">
+                                {{ today_day }}, {{ today_date }}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="padding: 30px 30px 20px 30px;">
+                            <p style="margin: 0; font-size: 18px; color: #1f2937; line-height: 1.6;">
+                                Dear,
+                            </p>
+                            <p style="margin: 15px 0 0 0; font-size: 15px; color: #6b7280; line-height: 1.6;">
+                                This is your daily security reminder for retailers under your hierarchy. Please review the following information and take necessary action.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Summary Cards -->
+                    <tr>
+                        <td style="padding: 20px 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="48%" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 8px; padding: 20px; text-align: center;">
+                                        <div style="font-size: 32px; font-weight: 700; color: #dc2626; margin-bottom: 5px;">
+                                            {{ not_logged_count }}
+                                        </div>
+                                        <div style="font-size: 14px; color: #991b1b; font-weight: 600;">
+                                            Not Logged In
+                                        </div>
+                                    </td>
+                                    <td width="4%"></td>
+                                    <td width="48%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; padding: 20px; text-align: center;">
+                                        <div style="font-size: 32px; font-weight: 700; color: #d97706; margin-bottom: 5px;">
+                                            {{ no_transaction_count }}
+                                        </div>
+                                        <div style="font-size: 14px; color: #92400e; font-weight: 600;">
+                                            No Transaction
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Section 1: Not Logged In -->
+                    <tr>
+                        <td style="padding: 30px 30px 20px 30px;">
+                            <div style="background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h2 style="margin: 0; color: #dc2626; font-size: 20px; font-weight: 700;">
+                                    ⚠️ Retailers Who Did Not Login Today
+                                </h2>
+                                <p style="margin: 8px 0 0 0; color: #991b1b; font-size: 14px;">
+                                    Total: <strong>{{ not_logged_count }}</strong> retailer(s)
+                                </p>
+                            </div>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center; width: 50px;">#</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: left;">Name</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">Username</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">ID</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if not_logged_in %}
+                                        {% for retailer in not_logged_in %}
+                                        <tr style="background-color: {% cycle '#f9fafb' '#ffffff' %};">
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center; font-weight: 600; color: #374151;">{{ forloop.counter }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151;">{{ retailer.name }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.username }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.id }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.contact }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5" style="padding: 20px; text-align: center; color: #10b981; font-weight: 600;">
+                                                ✅ All retailers logged in today!
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Section 2: No Transaction -->
+                    <tr>
+                        <td style="padding: 20px 30px 30px 30px;">
+                            <div style="background-color: #fffbeb; border-left: 4px solid #d97706; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h2 style="margin: 0; color: #d97706; font-size: 20px; font-weight: 700;">
+                                    📊 Retailers Who Logged In But No Transaction
+                                </h2>
+                                <p style="margin: 8px 0 0 0; color: #92400e; font-size: 14px;">
+                                    Total: <strong>{{ no_transaction_count }}</strong> retailer(s)
+                                </p>
+                            </div>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center; width: 50px;">#</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: left;">Name</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">Username</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">ID</th>
+                                        <th style="padding: 15px 12px; color: #ffffff; font-size: 14px; font-weight: 600; text-align: center;">Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if no_transaction %}
+                                        {% for retailer in no_transaction %}
+                                        <tr style="background-color: {% cycle '#f9fafb' '#ffffff' %};">
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center; font-weight: 600; color: #374151;">{{ forloop.counter }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151;">{{ retailer.name }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.username }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.id }}</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #6b7280; text-align: center;">{{ retailer.contact }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5" style="padding: 20px; text-align: center; color: #10b981; font-weight: 600;">
+                                                ✅ All logged-in retailers completed transactions!
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Action Required -->
+                    <tr>
+                        <td style="padding: 20px 30px 30px 30px;">
+                            <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 8px; padding: 20px; text-align: center;">
+                                <p style="margin: 0; color: #1e40af; font-size: 15px; font-weight: 600;">
+                                    💡 Please follow up with these retailers for security purposes
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 13px;">
+                                This is an automated email for security monitoring.
+                            </p>
+                            <p style="margin: 0; color: #9ca3af; font-size: 12px;">
+                                Copyright ©️ 2024 SHREEMAD SUPER E-SYSTEM PRIVATE LIMITED (Formerly known as SHREEMAD SUPER E-Commerce PRIVATE LIMITED), All Rights Reserved.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

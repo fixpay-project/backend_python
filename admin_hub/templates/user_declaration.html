@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmation of Security Cheque and Promissory Note</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 40px;
+      color: #000;
+    }
+    h2 {
+      font-size: 14px;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .date {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .section ol {
+      padding-left: 18px;
+      margin-top: 10px;
+      margin-bottom: 0px;
+    }
+    .section ol li {
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .declaration-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      gap: 5%;
+    }
+    .left-content {
+      width: 65%;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .right-box {
+      width: 30%;
+      border: 2px dashed #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 13px;
+      text-align: center;
+      padding: 5px;
+      min-height: 130px;
+      line-height: 1.4;
+    }
+    .dot-label {
+      font-size: 10px;
+      margin-right: 3px;
+    }
+
+    .heading-title {
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+  </style>
+</head>
+<body>
+
+<h2 class="heading-title">CONFIRMATION OF SECURITY CHEQUE AND PROMISSORY NOTE</h2>
+
+  <div class="date">Date: <strong>{{ date }}</strong></div>
+
+  <div class="section">
+    I, the undersigned, hereby make the following declarations and confirmations:<br><br>
+    <b><span class="dot-label">●</span> Name:</b> {{ user.name }}<br>
+    <b><span class="dot-label">●</span> Aadhaar Number:</b> {{ addhar_number }}<br>
+    <b><span class="dot-label">●</span> PAN Number:</b> {{ pan_number }}<br>
+    <b><span class="dot-label">●</span> Occupation:</b> Business<br>
+    <b><span class="dot-label">●</span> Age:</b> 28 years<br>
+    <b><span class="dot-label">●</span> Residential Address:</b> {{ residential_address }}<br>
+    <b><span class="dot-label">●</span> Business Address:</b> {{ shop_address }}<br>
+    <b><span class="dot-label">●</span> Contact Number:</b> {{ user.contact }}<br>
+    <b><span class="dot-label">●</span> Alternate Contact Number:</b> {{ alternate_num }}<br>
+    <b><span class="dot-label">●</span> Email ID:</b> {{ user.email }}
+  </div>
+
+  <div class="section">
+    WHEREAS I am entering into a business relationship with <b>Fix Pay Serve Private Limited</b>
+    (hereinafter referred to as <b>"FPSPL"</b>), I hereby acknowledge, declare, affirm and agree
+    to the following terms and conditions, which shall be binding upon me:
+
+    <ol>
+      <li><strong>Use of Services:</strong> I confirm that I am availing the online services provided by FPSPL for the purpose of conducting my business operations. I undertake not to charge or collect any unlawful, incorrect, or unauthorized amounts, including but not limited to charges, fees, or transaction chargebacks, from customers. In the event that I engage in such acts, I shall assume full and sole responsibility for all resulting consequences, liabilities, or losses.</li>
+
+      <li><strong>Prohibition on Misuse:</strong> I undertake not to utilize FPSPL’s services for any unauthorized, fraudulent, or illegal financial transactions. I understand the legal implications of such misuse and accept full liability and consequences arising therefrom.</li>
+
+      <li><strong>Indemnification:</strong> In the event of any unauthorized transaction, loss, chargeback, or expense arising from the use of FPSPL’s services in the course of my business relationship, I shall be solely liable and undertake to indemnify, defend, and hold harmless FPSPL from and against all such losses or damages.</li>
+
+      <li><strong>Legal Proceedings:</strong> In the event that any unauthorized, illegal, or fraudulent transactions are conducted by me and give rise to legal or criminal proceedings, FPSPL shall not be held liable under any circumstances. I acknowledge and accept this term unconditionally.</li>
+
+      <li><strong>Obligation to Provide Documentation:</strong> Upon request by FPSPL, I shall promptly provide or cause to be provided all relevant documentation, including but not limited to evidence of transactions, identity proofs, or any such information related to cardholders. Failure to provide the requested documentation shall render me fully liable for any legal or financial consequences, including hindrances or losses arising in any proceedings initiated against FPSPL.</li>
+
+      <li><strong>Security Cheque Undertaking:</strong> As security for any present or future financial obligations arising out of this agreement, I hereby issue an <b>unconditional and irrevocable security cheque</b> in favour of FPSPL, with the following details:<br><br>
+        <b><span class="dot-label">●</span> Bank Name:</b> {{ bank_name }} <br>
+        <b><span class="dot-label">●</span> Branch:</b> {{ bank_branch }} <br>
+        <b><span class="dot-label">●</span> Bank Account Number:</b> {{ account_number }} <br>
+        <b><span class="dot-label">●</span> Cheque Number:</b> {{ security_check_num }} <br><br>
+        This security cheque shall serve as a financial instrument and may be presented for encashment by FPSPL in the event of any default, breach, or non-fulfilment of my obligations under this confirmation / agreement. I grant FPSPL full and irrevocable consent to present the cheque for payment under such circumstances, without the requirement of any further notice.
+      </li>
+
+      <li><strong>Voluntary Execution and Understanding:</strong> I confirm that this declaration has been read and/or translated into a language that I fully understand, and that its terms have been clearly explained to me. I am executing this document voluntarily, in full possession of my mental faculties and without any force, pressure, coercion, or undue influence.</li>
+
+      <li><strong>Binding Nature and Jurisdiction:</strong> This declaration shall be binding upon me and my legal heirs, successors, and representatives. It shall be governed by the applicable laws of India. Any disputes or legal proceedings arising in connection with this agreement shall be subject to the exclusive jurisdiction of the competent courts at <b>Surat, Gujarat</b>.</li>
+    </ol>
+
+    This declaration constitutes a valid, lawful, binding, and enforceable financial obligation under Indian law.
+  </div>
+
+  <div class="declaration-footer">
+    <div class="left-content">
+      <p><b>Date:</b> {{ last_date }}</p>
+      <p><b>Executed by:</b></p>
+      <p><b>Name:</b> {{ user.name }}</p>
+      <p><b>Signature:</b> __________________</p>
+    </div>
+
+    <div class="right-box">
+      Attach Here
+    </div>
+  </div>
+
+</body>
+</html>

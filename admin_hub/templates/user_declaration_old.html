@@ -1,0 +1,128 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Declaration</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>Retailer Declaration</h1>
+    <p>This is to declare that retailer <strong>{{ user.name }}</strong> with ID <strong>{{ user.id }}</strong> agrees to the terms.</p>
+</body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Declaration of Sole Responsibility</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        ol li {
+            margin-bottom: 10px;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .signature-row p {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section">
+        <p><span class="bold">From:</span><br>
+            <span class="bold">Retailer/Partner Name:</span> {{ user.name }}<br>
+            <span class="bold">Business Name:</span> {{ shop_name }} / {{ user.id }}<br>
+            <span class="bold">Business Address:</span> {{ shop_address }}<br>
+            <span class="bold">Mobile Number:</span> {{ user.contact }}<br>
+            <span class="bold">Email ID:</span> {{ user.email }}
+        </p>
+    </div>
+
+    <div class="section">
+        <p><span class="bold">To:</span><br>
+            <span class="bold">Fixpay Pvt. Ltd.</span><br>
+            A-108, Aagam Shopping World,<br>
+            Vesu-Aabhva Road, Surat – 395007
+        </p>
+    </div>
+
+    <div class="section">
+        <p><span class="bold">Subject:</span> Declaration of Sole Responsibility for QR Code and Payment Gateway Usage
+        </p>
+    </div>
+
+    <div class="section">
+        <p>Dear Sir/Madam,</p>
+
+        <p>
+            I/We, the undersigned, hereby declare and confirm that I am fully aware of and understand the conditions<br>
+            and responsibilities involved in using the Payment Gateway/POS services provided by
+            <span class="bold">Fixpay Pvt. Ltd.</span>
+        </p>
+
+        <p>
+            I accept that all transactions made through Credit Card, Debit Card, Net Banking, UPI, Wallet, or QR <br>
+            Code under my business account are my sole responsibility. I assure that all such transactions are <br>
+            genuine and lawful to the best of my knowledge.
+        </p>
+
+        <p>I/We also acknowledge and agree to the following terms:</p>
+
+        <ol>
+            <li>Any fraudulent or unauthorized transaction carried out through my/our QR Code or Payment <br>
+                Gateway shall be my/our full responsibility, and I/we shall be liable for any loss or damages <br>
+                incurred.</li>
+
+            <li>I/We shall not hold <span class="bold">Fixpay Pvt. Ltd.</span>, its Directors, Employees, Officers, or
+                Agents liable for any <br>
+                claims, damages, expenses, or losses arising from my/our use of the payment
+                services.
+            </li>
+
+            <li>In the event of any damage, loss, misuse, or illegal activity arising out of my/our business<br> 
+                operations orpayment processing, I/we shall bear full responsibility and indemnify
+                <span class="bold">Fixpay Pvt.<br> Ltd.</span> for any such damages or liabilities.
+            </li>
+
+            <li>I/We agree that <span class="bold">Fixpay Pvt. Ltd.</span>’s Sales & Distribution team will not be held
+                accountable for any <br> direct or indirect loss or liability related to my/our business activities or
+                negligence.
+            </li>
+        </ol>
+    </div>
+
+    <div class="section signature-row">
+        <p><span class="bold">Signature:</span> _________________________</p>
+        <p><span class="bold">Date:</span> _________________________</p>
+    </div>
+</body>
+
+</html>
