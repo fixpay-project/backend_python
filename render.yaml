@@ -19,4 +19,4 @@ services:
 databases:
   - name: fixpay-postgres
     databaseName: ssepl_admin_db
-    user: postgres
+    user: ssepl_user
