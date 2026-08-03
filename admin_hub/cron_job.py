@@ -334,10 +334,12 @@ def create_logger(file_path):
         print(f"{dt_module.datetime.now()} - {message}")
     return log
 
-main_log_file = "/var/www/QAAPI/fixpay_backEnd/ssepl_backend/bbps_main_log.txt"
-status_log_file = "/var/www/QAAPI/fixpay_backEnd/ssepl_backend/bbps_status_log.txt"
-success_log_file = "/var/www/QAAPI/fixpay_backEnd/ssepl_backend/bbps_success_log.txt"
-failure_log_file = "/var/www/QAAPI/fixpay_backEnd/ssepl_backend/bbps_failure_log.txt"
+from django.conf import settings
+LOG_DIR = getattr(settings, 'BASE_DIR', os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+main_log_file = os.path.join(LOG_DIR, "bbps_main_log.txt")
+status_log_file = os.path.join(LOG_DIR, "bbps_status_log.txt")
+success_log_file = os.path.join(LOG_DIR, "bbps_success_log.txt")
+failure_log_file = os.path.join(LOG_DIR, "bbps_failure_log.txt")
 
 log_main = create_logger(main_log_file)
 log_status = create_logger(status_log_file)

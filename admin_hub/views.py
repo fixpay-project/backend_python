@@ -4186,7 +4186,7 @@ class UserLoginAPIView(APIView):
                 access_token = get_tokens_for_user(user, timedelta(days=1))
                 load_dotenv()
                 device_active = 'device_number'
-                number = os.getenv(device_active)
+                number = os.getenv(device_active, '1')
                 get_user_log = PortalUserLoginLogs.objects.filter(pu_user=user, is_expire=False)
                 if len(get_user_log) == int(number):
                     if get_user_log[0].expire_datetime <= timezone.now():
