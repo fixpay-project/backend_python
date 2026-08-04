@@ -1299,10 +1299,10 @@ class BbpsBillerAPIView(APIView):
                 split_pay.text = "N"
 
                 payment_info = ET.SubElement(payment_method, "paymentInfo")
-                info_entry = ET.SubElement(payment_info, "info")
-                paramName = ET.SubElement(info_entry, "paramName")
+                # info_entry = ET.SubElement(payment_info, "info")
+                paramName = ET.SubElement(payment_info, "paramName")
                 paramName.text = "Remarks"
-                paramValue = ET.SubElement(info_entry, "paramValue")
+                paramValue = ET.SubElement(payment_info, "paramValue")
                 paramValue.text = "Cash Payment"
 
                 # Payment Mode: UPI (Commented Out)
