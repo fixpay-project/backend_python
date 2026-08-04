@@ -14,6 +14,10 @@ import xml.etree.ElementTree as ET
 from .commission_calculations import *
 from .utilies import *
 from rest_framework.exceptions import ValidationError
+from django.conf import settings
+
+BBPS_AGENT_ID = getattr(settings, 'BBPS_AGENT_ID', 'CC01MS76INTU00000001')
+
 
 
 def unpad(data, block_size):
@@ -309,7 +313,7 @@ class BbpsBillerAPIView(APIView):
 
             # Static data
             agent_id = ET.SubElement(root, "agentId")
-            agent_id.text = "CC01MS76INTU00000002"
+            agent_id.text = BBPS_AGENT_ID
 
             agent_device_info = ET.SubElement(root, "agentDeviceInfo")
             ip = ET.SubElement(agent_device_info, "ip")
@@ -461,7 +465,7 @@ class BbpsBillerAPIView(APIView):
 
             # Static data
             agent_id = ET.SubElement(root, "agentId")
-            agent_id.text = "CC01MS76INTU00000002"
+            agent_id.text = BBPS_AGENT_ID
 
             biller_adhoc = ET.SubElement(root, "billerAdhoc")
             biller_adhoc.text = "false"
