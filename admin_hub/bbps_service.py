@@ -1307,7 +1307,7 @@ class BbpsBillerAPIView(APIView):
                 # paramValue.text = "Cash Payment"
 
 
-                # CORRECTED CODE:
+                # Payment Method - Cash Mode
                 payment_method = ET.SubElement(root, "paymentMethod")
                 payment_mode = ET.SubElement(payment_method, "paymentMode")
                 payment_mode.text = "Cash"
@@ -1316,13 +1316,13 @@ class BbpsBillerAPIView(APIView):
                 split_pay = ET.SubElement(payment_method, "splitPay")
                 split_pay.text = "N"
 
-                # Payment Info container
-                payment_info = ET.SubElement(payment_method, "paymentInfo")
+                # Payment Info container (outside paymentMethod, child of root)
+                payment_info = ET.SubElement(root, "paymentInfo")
                 info_entry = ET.SubElement(payment_info, "info")
                 info_name = ET.SubElement(info_entry, "infoName")
                 info_name.text = "Remarks"
                 info_value = ET.SubElement(info_entry, "infoValue")
-                info_value.text = "Cash Payment"
+                info_value.text = "Received"
 
 
                 # Payment Mode: UPI (Commented Out)
