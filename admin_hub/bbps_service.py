@@ -23,6 +23,10 @@ from rest_framework.views import APIView
 from validation.custom_validation import *
 from django.forms.models import model_to_dict
 from django.http import FileResponse, HttpResponse
+from django.conf import settings
+
+BBPS_AGENT_ID = getattr(settings, 'BBPS_AGENT_ID', 'CC01MS76INTU00000001')
+
 
 def unpad(data, block_size):
     pad_len = data[-1]
@@ -395,7 +399,7 @@ class BbpsBillerAPIView(APIView):
 
             # Static data
             agent_id = ET.SubElement(root, "agentId")
-            agent_id.text = "CC01MS76INTU00000002"
+            agent_id.text = BBPS_AGENT_ID
 
             agent_device_info = ET.SubElement(root, "agentDeviceInfo")
             ip = ET.SubElement(agent_device_info, "ip")
@@ -1198,7 +1202,7 @@ class BbpsBillerAPIView(APIView):
 
                 # Static data
                 agent_id = ET.SubElement(root, "agentId")
-                agent_id.text = "CC01MS76INTU00000002"
+                agent_id.text = BBPS_AGENT_ID
 
                 biller_adhoc = ET.SubElement(root, "billerAdhoc")
                 biller_adhoc.text = "false"
@@ -1929,7 +1933,7 @@ class BbpsDepositBalanceApiView(APIView):
             from_date = request.data.get("toDate", datetime.datetime.today().strftime("%Y-%m-%d"))
             to_date = request.data.get("toDate", datetime.datetime.today().strftime("%Y-%m-%d"))
             trans_type = request.data.get("transType", "DR")
-            agent_id = request.data.get("agentId", "CC01MS76INTU00000002")
+            agent_id = request.data.get("agentId", BBPS_AGENT_ID)
 
             # Build XML
             root = Element('depositDetailsRequest')
@@ -2185,7 +2189,7 @@ def get_bbps_deposit_balance():
         from_date = datetime.datetime.today().strftime("%Y-%m-%d")
         to_date = datetime.datetime.today().strftime("%Y-%m-%d")
         trans_type = "DR"
-        agent_id = "CC01MS76INTU00000002"
+        agent_id = BBPS_AGENT_ID
 
         # Build request XML
         root = Element('depositDetailsRequest')
