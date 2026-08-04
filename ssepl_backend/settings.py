@@ -109,26 +109,18 @@ WSGI_APPLICATION = 'ssepl_backend.wsgi.application'
 
 
 
-if os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'ssepl_admin_db'),
-            'USER': os.getenv('DB_USER', 'postgres'),  # Default user
-            'PASSWORD': os.getenv('DB_PASSWORD', 'ssepl_db@dev'),  # Password ko environment variable se fetch karenge
-            'HOST': os.getenv('DB_HOST', 'localhost'),  # Host
-            'PORT': os.getenv('DB_PORT', '5432'),  # Default port
-        }
-    }
+RENDER_DATABASE_URL = 'postgresql://fixpay_backend:3igzAFNsElRwzCtOIrcaacnpAjgQd9Q1@dpg-d9jpuer7uimc73a25700-a.singapore-postgres.render.com/fixpay_backend?sslmode=require'
+
+DATABASE_URL = os.getenv('DATABASE_URL', RENDER_DATABASE_URL)
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True,
+    )
+}
 
 
 # Password validation
