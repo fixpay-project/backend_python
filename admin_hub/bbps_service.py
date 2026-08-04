@@ -1298,6 +1298,13 @@ class BbpsBillerAPIView(APIView):
                 split_pay = ET.SubElement(payment_method, "splitPay")
                 split_pay.text = "N"
 
+                payment_info = ET.SubElement(payment_method, "paymentInfo")
+                info_entry = ET.SubElement(payment_info, "info")
+                info_name = ET.SubElement(info_entry, "infoName")
+                info_name.text = "Remarks"
+                info_value = ET.SubElement(info_entry, "infoValue")
+                info_value.text = "Cash Payment"
+
                 # Payment Mode: UPI (Commented Out)
                 # if float(formatted_amount) > 49999.00:
                 #     print('UPI----------')
