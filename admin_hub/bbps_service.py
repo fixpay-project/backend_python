@@ -1289,56 +1289,66 @@ class BbpsBillerAPIView(APIView):
 
                 amount_tags = ET.SubElement(amount_info, "amountTags")
                 amount_tags.text = ""
-                if float(formatted_amount) > 49999.00:
-                    print('UPI----------')
-                    print('amount greater than 49999.00', amount)
-                    payment_method = ET.SubElement(root, "paymentMethod")
-                    payment_mode = ET.SubElement(payment_method, "paymentMode")
-                    payment_mode.text = "UPI"
-                    quick_pay = ET.SubElement(payment_method, "quickPay")
-                    quick_pay.text = "N"
-                    split_pay = ET.SubElement(payment_method, "splitPay")
-                    split_pay.text = "N"
+                # Payment Method - Cash Mode
+                payment_method = ET.SubElement(root, "paymentMethod")
+                payment_mode = ET.SubElement(payment_method, "paymentMode")
+                payment_mode.text = "Cash"
+                quick_pay = ET.SubElement(payment_method, "quickPay")
+                quick_pay.text = "N"
+                split_pay = ET.SubElement(payment_method, "splitPay")
+                split_pay.text = "N"
 
-                    # Payment Info (static for now)
-                    payment_info = ET.SubElement(root, "paymentInfo")
-                    payment_info_entry = ET.SubElement(payment_info, "info")
-                    info_name = ET.SubElement(payment_info_entry, "infoName")
-                    info_name.text = "VPA"
-                    info_value = ET.SubElement(payment_info_entry, "infoValue")
-                    info_value.text = "gaurangkumar@upi"
-
-                else:
-                    if 'UPI' in split_mode:
-                        payment_method = ET.SubElement(root, "paymentMethod")
-                        payment_mode = ET.SubElement(payment_method, "paymentMode")
-                        payment_mode.text = "UPI"
-                        quick_pay = ET.SubElement(payment_method, "quickPay")
-                        quick_pay.text = "N"
-                        split_pay = ET.SubElement(payment_method, "splitPay")
-                        split_pay.text = "N"
-                        payment_info = ET.SubElement(root, "paymentInfo")
-                        payment_info_entry = ET.SubElement(payment_info, "info")
-                        info_name = ET.SubElement(payment_info_entry, "infoName")
-                        info_name.text = "VPA"
-                        info_value = ET.SubElement(payment_info_entry, "infoValue")
-                        info_value.text = "gaurangkumar@upi"
-                    else:
-                        payment_method = ET.SubElement(root, "paymentMethod")
-                        payment_mode = ET.SubElement(payment_method, "paymentMode")
-                        payment_mode.text = "UPI"
-                        quick_pay = ET.SubElement(payment_method, "quickPay")
-                        quick_pay.text = "N"
-                        split_pay = ET.SubElement(payment_method, "splitPay")
-                        split_pay.text = "N"
-
-                        # Payment Info (static for now)
-                        payment_info = ET.SubElement(root, "paymentInfo")
-                        payment_info_entry = ET.SubElement(payment_info, "info")
-                        info_name = ET.SubElement(payment_info_entry, "infoName")
-                        info_name.text = "VPA"
-                        info_value = ET.SubElement(payment_info_entry, "infoValue")
-                        info_value.text = "gaurangkumar@upi"
+                # Payment Mode: UPI (Commented Out)
+                # if float(formatted_amount) > 49999.00:
+                #     print('UPI----------')
+                #     print('amount greater than 49999.00', amount)
+                #     payment_method = ET.SubElement(root, "paymentMethod")
+                #     payment_mode = ET.SubElement(payment_method, "paymentMode")
+                #     payment_mode.text = "UPI"
+                #     quick_pay = ET.SubElement(payment_method, "quickPay")
+                #     quick_pay.text = "N"
+                #     split_pay = ET.SubElement(payment_method, "splitPay")
+                #     split_pay.text = "N"
+                #
+                #     # Payment Info (static for now)
+                #     payment_info = ET.SubElement(root, "paymentInfo")
+                #     payment_info_entry = ET.SubElement(payment_info, "info")
+                #     info_name = ET.SubElement(payment_info_entry, "infoName")
+                #     info_name.text = "VPA"
+                #     info_value = ET.SubElement(payment_info_entry, "infoValue")
+                #     info_value.text = "gaurangkumar@upi"
+                #
+                # else:
+                #     if 'UPI' in split_mode:
+                #         payment_method = ET.SubElement(root, "paymentMethod")
+                #         payment_mode = ET.SubElement(payment_method, "paymentMode")
+                #         payment_mode.text = "UPI"
+                #         quick_pay = ET.SubElement(payment_method, "quickPay")
+                #         quick_pay.text = "N"
+                #         split_pay = ET.SubElement(payment_method, "splitPay")
+                #         split_pay.text = "N"
+                #         payment_info = ET.SubElement(root, "paymentInfo")
+                #         payment_info_entry = ET.SubElement(payment_info, "info")
+                #         info_name = ET.SubElement(payment_info_entry, "infoName")
+                #         info_name.text = "VPA"
+                #         info_value = ET.SubElement(payment_info_entry, "infoValue")
+                #         info_value.text = "gaurangkumar@upi"
+                #     else:
+                #         payment_method = ET.SubElement(root, "paymentMethod")
+                #         payment_mode = ET.SubElement(payment_method, "paymentMode")
+                #         payment_mode.text = "UPI"
+                #         quick_pay = ET.SubElement(payment_method, "quickPay")
+                #         quick_pay.text = "N"
+                #         split_pay = ET.SubElement(payment_method, "splitPay")
+                #         split_pay.text = "N"
+                #
+                #         # Payment Info (static for now)
+                #         payment_info = ET.SubElement(root, "paymentInfo")
+                #         payment_info_entry = ET.SubElement(payment_info, "info")
+                #         info_name = ET.SubElement(payment_info_entry, "infoName")
+                #         info_name.text = "VPA"
+                #         info_value = ET.SubElement(payment_info_entry, "infoValue")
+                #         info_value.text = "gaurangkumar@upi"
 
 
                 xml_data = ET.tostring(root, encoding="unicode")
