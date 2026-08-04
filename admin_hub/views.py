@@ -18168,7 +18168,7 @@ class ManualCommissionSettlementView(APIView):
 
             return Response({
                 'status': 'success',
-                'message': f'Successfully settled {sum([r.get('commission_count', 0) for r in results])} commissions',
+                'message': f"Successfully settled {sum([r.get('commission_count', 0) for r in results])} commissions",
                 'data': results
             }, status=status.HTTP_200_OK)
 
