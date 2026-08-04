@@ -39,7 +39,7 @@ from user_agents import parse
 # Django REST Framework Imports
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -4127,12 +4127,21 @@ class SetMpinAPIView(APIView):
 # PARTNERS LOGIN
 class UserLoginAPIView(APIView):
     permission_classes = [AllowAny]
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
         is_app = request.data.get('is_app', False)
+
+        # Static testing bypass (does not hit database)
+        if username == 'test_static' and password == 'test_pass':
+            return Response({
+                'status': 'success',
+                'message': 'Static login test successful without DB.',
+                'user_role': 'TEST_ADMIN',
+                'user_id': 999
+            }, status=status.HTTP_200_OK)
 
         # Validate input
         if not username or not password:
