@@ -11,6 +11,7 @@ from .daily_reminder import *
 
 urlpatterns = [
     path('pos_test',post_test),
+    path('check-ip/', verify_static_ip),
     
     path('current-location/',GeolocationGetApiView.as_view()),
     # POS Hooks Endpoints

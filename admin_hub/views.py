@@ -20894,3 +20894,11 @@ class GetAuthRazorPay(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+def verify_static_ip(request):
+    try:
+        response = requests.get("https://api.ipify.org?format=json", timeout=10)
+        return JsonResponse(response.json())
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
