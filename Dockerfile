@@ -7,11 +7,18 @@ ENV PORT=8080
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (including PostgreSQL & WeasyPrint C-libraries)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     gcc \
+    libgobject-2.0-0 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    gobject-introspection \
+    libharfbuzz0b \
+    pango1.0-tools \
+    libfontconfig1 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/
