@@ -1300,10 +1300,10 @@ class BbpsBillerAPIView(APIView):
 
                 payment_info = ET.SubElement(payment_method, "paymentInfo")
                 info_entry = ET.SubElement(payment_info, "info")
-                info_name = ET.SubElement(info_entry, "infoName")
-                info_name.text = "Remarks"
-                info_value = ET.SubElement(info_entry, "infoValue")
-                info_value.text = "Cash Payment"
+                paramName = ET.SubElement(info_entry, "paramName")
+                paramName.text = "Remarks"
+                paramValue = ET.SubElement(info_entry, "paramValue")
+                paramValue.text = "Cash Payment"
 
                 # Payment Mode: UPI (Commented Out)
                 # if float(formatted_amount) > 49999.00:
