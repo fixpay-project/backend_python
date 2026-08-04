@@ -9,7 +9,7 @@ import string
 from rest_framework.decorators import api_view
 from xml.etree.ElementTree import Element, SubElement, tostring
 import xmltodict
-from datetime import datetime
+import datetime
 from zoneinfo import ZoneInfo
 import xml.etree.ElementTree as ET
 from .commission_calculations import *
@@ -22,6 +22,7 @@ from ssepl_backend.custom_jwt_auth import CustomJWTAuthentication,IsAdmin,IsReta
 from rest_framework.views import APIView
 from validation.custom_validation import *
 from django.forms.models import model_to_dict
+from django.http import FileResponse, HttpResponse
 
 def unpad(data, block_size):
     pad_len = data[-1]
@@ -45,10 +46,41 @@ BBPS_PAYMENT_LOG_DIR = os.path.join(
     'bbps_payment',
 )
 
+BBPS_SINGLE_LOG_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)),
+    'logs',
+    'bbps_api_debug.log',
+)
+
+
+def append_to_bbps_debug_log(request_xml, api_url, api_params, response_status_code, encrypted_response, decrypted_response=None, error=None):
+    try:
+        os.makedirs(os.path.dirname(BBPS_SINGLE_LOG_FILE), exist_ok=True)
+        now_str = datetime.datetime.now(ZoneInfo('Asia/Kolkata')).strftime("%Y-%m-%d %H:%M:%S IST")
+        with open(BBPS_SINGLE_LOG_FILE, 'a', encoding='utf-8') as f:
+            f.write("==========================================================\n")
+            f.write(f"TIMESTAMP (IST): {now_str}\n")
+            f.write(f"API URL        : {api_url}\n")
+            if api_params:
+                f.write(f"API PARAMS     : {json.dumps(api_params, indent=2) if isinstance(api_params, dict) else api_params}\n")
+            f.write("===== REQUEST XML =====\n")
+            f.write(f"{request_xml}\n\n")
+            f.write("===== RESPONSE =====\n")
+            f.write(f"HTTP Status Code: {response_status_code}\n")
+            f.write(f"Encrypted Response: {encrypted_response}\n\n")
+            if decrypted_response is not None:
+                f.write("===== DECRYPTED RESPONSE =====\n")
+                f.write(f"{decrypted_response}\n")
+            if error is not None:
+                f.write(f"ERROR: {error}\n")
+            f.write("==========================================================\n\n")
+    except Exception as e:
+        print(f"Error writing to BBPS debug log: {e}")
+
 
 def write_bbps_xml_payment_log(request_xml, api_url, api_params, response_status_code, encrypted_response, decrypted_response=None):
     os.makedirs(BBPS_PAYMENT_LOG_DIR, exist_ok=True)
-    timestamp = datetime.now(ZoneInfo('Asia/Kolkata')).isoformat(timespec='seconds')
+    timestamp = datetime.datetime.now(ZoneInfo('Asia/Kolkata')).isoformat(timespec='seconds')
     safe_timestamp = timestamp.replace(':', '-')
     log_file_path = os.path.join(
         BBPS_PAYMENT_LOG_DIR,
@@ -75,6 +107,7 @@ def write_bbps_xml_payment_log(request_xml, api_url, api_params, response_status
             log_file.write('===== DECRYPTED RESPONSE =====\n')
             log_file.write(f'{decrypted_response}\n')
 
+    append_to_bbps_debug_log(request_xml, api_url, api_params, response_status_code, encrypted_response, decrypted_response)
     return log_file_path
 
 
@@ -419,6 +452,14 @@ class BbpsBillerAPIView(APIView):
             print('===>', response.text)
             decrypt_data = self.decrypt_data(response.text)
             print('===>', decrypt_data)
+            append_to_bbps_debug_log(
+                request_xml=xml_data,
+                api_url=url,
+                api_params=parems,
+                response_status_code=response.status_code,
+                encrypted_response=response.text,
+                decrypted_response=decrypt_data
+            )
             xml_to_json = self.xml_to_json(decrypt_data)
             json_data = json.loads(xml_to_json)
                 
@@ -2563,3 +2604,29 @@ def get_all_recipients(sender_mobile, txn_type="IMPS", bank_id="ARTL"):
 
     except Exception as e:
         return {'success': False, 'error': str(e)}
+
+
+class BbpsLogDownloadAPIView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        if not os.path.exists(BBPS_SINGLE_LOG_FILE):
+            return HttpResponse("No BBPS log file found.", content_type="text/plain", status=404)
+        return FileResponse(open(BBPS_SINGLE_LOG_FILE, 'rb'), content_type='text/plain', filename='bbps_api_debug.log')
+
+
+class BbpsLogClearAPIView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        try:
+            if os.path.exists(BBPS_SINGLE_LOG_FILE):
+                with open(BBPS_SINGLE_LOG_FILE, 'w', encoding='utf-8') as f:
+                    f.truncate(0)
+                return HttpResponse("BBPS log file cleared successfully.", content_type="text/plain")
+            return HttpResponse("No BBPS log file found to clear.", content_type="text/plain")
+        except Exception as e:
+            return HttpResponse(f"Error clearing log file: {str(e)}", content_type="text/plain", status=500)
+

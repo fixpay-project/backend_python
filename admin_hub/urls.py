@@ -163,6 +163,8 @@ urlpatterns = [
 
     # get bbps live balance ------------------------
     path('get-bbps-balance/',BbpsDepositBalanceApiView.as_view()),
+    path('bbps-logs/download/', BbpsLogDownloadAPIView.as_view()),
+    path('bbps-logs/clear/', BbpsLogClearAPIView.as_view()),
 
     path('bbps-transaction-status/',TransactionStatusAPIView.as_view()),
 
