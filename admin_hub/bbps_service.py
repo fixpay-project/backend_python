@@ -1289,7 +1289,25 @@ class BbpsBillerAPIView(APIView):
 
                 amount_tags = ET.SubElement(amount_info, "amountTags")
                 amount_tags.text = ""
-                # Payment Method - Cash Mode
+
+                # # Payment Method - Cash Mode
+                # payment_method = ET.SubElement(root, "paymentMethod")
+                # payment_mode = ET.SubElement(payment_method, "paymentMode")
+                # payment_mode.text = "Cash"
+                # quick_pay = ET.SubElement(payment_method, "quickPay")
+                # quick_pay.text = "N"
+                # split_pay = ET.SubElement(payment_method, "splitPay")
+                # split_pay.text = "N"
+
+                # payment_info = ET.SubElement(payment_method, "paymentInfo")
+                # # info_entry = ET.SubElement(payment_info, "info")
+                # paramName = ET.SubElement(payment_info, "paramName")
+                # paramName.text = "Remarks"
+                # paramValue = ET.SubElement(payment_info, "paramValue")
+                # paramValue.text = "Cash Payment"
+
+
+                # CORRECTED CODE:
                 payment_method = ET.SubElement(root, "paymentMethod")
                 payment_mode = ET.SubElement(payment_method, "paymentMode")
                 payment_mode.text = "Cash"
@@ -1298,12 +1316,14 @@ class BbpsBillerAPIView(APIView):
                 split_pay = ET.SubElement(payment_method, "splitPay")
                 split_pay.text = "N"
 
+                # Payment Info container
                 payment_info = ET.SubElement(payment_method, "paymentInfo")
-                # info_entry = ET.SubElement(payment_info, "info")
-                paramName = ET.SubElement(payment_info, "paramName")
-                paramName.text = "Remarks"
-                paramValue = ET.SubElement(payment_info, "paramValue")
-                paramValue.text = "Cash Payment"
+                info_entry = ET.SubElement(payment_info, "info")
+                info_name = ET.SubElement(info_entry, "infoName")
+                info_name.text = "Remarks"
+                info_value = ET.SubElement(info_entry, "infoValue")
+                info_value.text = "Cash Payment"
+
 
                 # Payment Mode: UPI (Commented Out)
                 # if float(formatted_amount) > 49999.00:
