@@ -16,7 +16,9 @@ from .utilies import *
 from rest_framework.exceptions import ValidationError
 from django.conf import settings
 
-BBPS_AGENT_ID = getattr(settings, 'BBPS_AGENT_ID', 'CC01MS76INTU00000001')
+BBPS_AGENT_ID = getattr(settings, 'BBPS_AGENT_ID', 'CC01MS76AGTU00000001')
+BBPS_INIT_CHANNEL = getattr(settings, 'BBPS_INIT_CHANNEL', 'AGT')
+
 
 
 
@@ -320,7 +322,7 @@ class BbpsBillerAPIView(APIView):
             ip.text = "110.227.212.120"
 
             init_channel = ET.SubElement(agent_device_info, "initChannel")
-            init_channel.text = "INT"
+            init_channel.text = BBPS_INIT_CHANNEL
 
             mac = ET.SubElement(agent_device_info, "mac")
             mac.text = "94-BB-43-F0-FB-C8"
@@ -475,7 +477,7 @@ class BbpsBillerAPIView(APIView):
             ip.text = "110.227.212.120"
 
             init_channel = ET.SubElement(agent_device_info, "initChannel")
-            init_channel.text = "INT"
+            init_channel.text = BBPS_INIT_CHANNEL
 
             mac = ET.SubElement(agent_device_info, "mac")
             mac.text = "94-BB-43-F0-FB-C8"
